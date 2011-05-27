@@ -3,6 +3,9 @@
 # Initialize modules for all sh-derivative shells                      #
 #----------------------------------------------------------------------#
 
+bn="$(basename $0)"
+bn="${bn%%.sh}"
+
 function modenv() {
   trap "" 1 2 3
   echo -n "Loading Modules for "
@@ -30,16 +33,14 @@ function modenv() {
   trap - 1 2 3
 }
 
-if ! test -r "${HOME}/.automod" ; then
+if ! test -r "${HOME}/.${bn}" ; then
 cat << EOF
-+----------------------------------------------------------------------+
-| Modules                                                              |
-|                                                                      |
-| Type 'modenv' to active the module environment                       |
-| If you want automatic loading create '\$HOME/.automod'                |
-+----------------------------------------------------------------------+
+
+ Type 'modenv' to active the module environment
+ If you want automatic loading create '${HOME}/.${bn}'
+
 EOF
 else
-  modenv
+  ${bn}
 fi
 
